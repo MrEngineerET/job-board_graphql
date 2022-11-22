@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { logout } from '../auth';
+import { Link } from "react-router-dom";
+import { logout } from "../auth";
+import propTypes from "prop-types";
 
 function NavBar({ loggedIn, onLogout }) {
   const handleLogout = () => {
@@ -18,7 +19,6 @@ function NavBar({ loggedIn, onLogout }) {
             <Link className="navbar-item" to="/jobs/new">
               Post Job
             </Link>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="navbar-item" onClick={handleLogout}>
               Logout
             </a>
@@ -32,5 +32,10 @@ function NavBar({ loggedIn, onLogout }) {
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  onLogout: propTypes.func,
+  loggedIn: propTypes.bool,
+};
 
 export default NavBar;
