@@ -2,7 +2,9 @@ import cors from "cors";
 import express from "express";
 import { expressjwt } from "express-jwt";
 import jwt from "jsonwebtoken";
-import { User } from "./db.js";
+import { User, Job } from "./db.js";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 
 const PORT = 9000;
 // eslint-disable-next-line no-undef
@@ -29,6 +31,29 @@ app.post("/login", async (req, res) => {
     res.sendStatus(401);
   }
 });
+
+const typeDefs = `#graphql
+  type Query {
+    jobs:[Jobs]
+  }
+
+  type Jobs {
+    title: String!
+    companyId: ID!
+    description: String
+  }
+`;
+const resolvers = {
+  Query: {
+    jobs: () => Job.findAll(),
+  },
+};
+
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
+await apolloServer.start();
+
+//instegrate apollo graphql to express
+app.use("/graphql", expressMiddleware(apolloServer));
 
 app.listen({ port: PORT }, () => {
   console.log(`Server running on port ${PORT}`);
