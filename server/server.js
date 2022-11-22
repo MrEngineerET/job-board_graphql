@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { User } from "./db.js";
 
 const PORT = 9000;
+// eslint-disable-next-line no-undef
 const JWT_SECRET = Buffer.from("Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt", "base64");
 
 const app = express();
