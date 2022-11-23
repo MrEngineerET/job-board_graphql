@@ -2,9 +2,11 @@ import cors from "cors";
 import express from "express";
 import { expressjwt } from "express-jwt";
 import jwt from "jsonwebtoken";
-import { User, Job } from "./db.js";
+import { User } from "./db.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
+import resolvers from "./resolvers.js";
+import fs from "fs/promises";
 
 const PORT = 9000;
 // eslint-disable-next-line no-undef
@@ -32,22 +34,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-const typeDefs = `#graphql
-  type Query {
-    jobs:[Jobs]
-  }
-
-  type Jobs {
-    title: String!
-    companyId: ID!
-    description: String
-  }
-`;
-const resolvers = {
-  Query: {
-    jobs: () => Job.findAll(),
-  },
-};
+const typeDefs = await fs.readFile("./schema.graphql", { encoding: "utf-8" });
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 await apolloServer.start();
