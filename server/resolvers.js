@@ -3,8 +3,9 @@ import { Job, Company } from "./db.js";
 export default {
   Query: {
     jobs: () => Job.findAll(),
+    job: (parent, { jobId }) => Job.findById(jobId),
   },
-  Jobs: {
+  Job: {
     company: ({ companyId }) => {
       return Company.findById(companyId);
     },
