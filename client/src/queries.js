@@ -53,3 +53,18 @@ export async function getCompany(companyId) {
   const res = await request(API_URL, query, { companyId });
   return res.company;
 }
+
+export async function getCompanyJobs(companyId) {
+  const query = gql`
+    query ($companyId: ID!) {
+      company(companyId: $companyId) {
+        jobs {
+          id
+          title
+        }
+      }
+    }
+  `;
+  const res = await request(API_URL, query, { companyId });
+  return res.company.jobs;
+}
