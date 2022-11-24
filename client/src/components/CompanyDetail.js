@@ -1,10 +1,14 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { companies } from "../fake-data";
+import { getCompany } from "../queries";
 
 function CompanyDetail() {
   const { companyId } = useParams();
+  const [company, setCompany] = useState({});
+  useEffect(() => {
+    getCompany(companyId).then(setCompany);
+  }, []);
 
-  const company = companies.find((company) => company.id === companyId);
   return (
     <div>
       <h1 className="title">{company.name}</h1>
