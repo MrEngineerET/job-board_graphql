@@ -2,6 +2,20 @@ import { request, gql } from "graphql-request";
 
 const API_URL = "http://localhost:9000/graphql";
 
+export async function createJob(data) {
+  const query = gql`
+    mutation createJobMutation($input: createJobInput) {
+      job: createJob(input: $input) {
+        id
+        title
+        description
+      }
+    }
+  `;
+  const res = await request(API_URL, query, { input: data });
+  return res.job;
+}
+
 export async function getJobs() {
   const query = gql`
     query {
