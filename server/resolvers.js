@@ -4,6 +4,7 @@ export default {
   Query: {
     jobs: () => Job.findAll(),
     job: (parent, { jobId }) => Job.findById(jobId),
+    company: (parent, { companyId }) => Company.findById(companyId),
   },
   Job: {
     company: ({ companyId }) => {
