@@ -11,4 +11,7 @@ export default {
       return Company.findById(companyId);
     },
   },
+  Company: {
+    jobs: (parent) => Job.findAll((job) => job.companyId === parent.id),
+  },
 };
