@@ -7,8 +7,7 @@ export default {
     company: (parent, { companyId }) => Company.findById(companyId),
   },
   Mutation: {
-    createJob: (parent, { title, companyId, description }) =>
-      Job.create({ title, companyId, description }),
+    createJob: (parent, { input }) => Job.create(input),
   },
   Job: {
     company: ({ companyId }) => {
