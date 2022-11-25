@@ -8,6 +8,8 @@ export default {
   },
   Mutation: {
     createJob: (parent, { input }) => Job.create(input),
+    deleteJob: (parent, { jobId }) => Job.delete(jobId),
+    updateJob: (parent, { input }) => Job.update(input),
   },
   Job: {
     company: ({ companyId }) => {
