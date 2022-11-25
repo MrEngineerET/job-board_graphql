@@ -4,7 +4,7 @@ const API_URL = "http://localhost:9000/graphql";
 
 export async function createJob(data) {
   const query = gql`
-    mutation createJobMutation($input: createJobInput) {
+    mutation createJobMutation($input: CreateJobInput!) {
       job: createJob(input: $input) {
         id
         title
@@ -13,6 +13,19 @@ export async function createJob(data) {
     }
   `;
   const res = await request(API_URL, query, { input: data });
+  return res.job;
+}
+
+export async function deleteJob(jobId) {
+  const query = gql`
+    mutation deleteJobMutation($jobId: ID!) {
+      job: deleteJob(jobId: $jobId) {
+        id
+        title
+      }
+    }
+  `;
+  const res = await request(API_URL, query, { jobId });
   return res.job;
 }
 
